@@ -1,24 +1,32 @@
 === Plugin Name ===
 Plugin Name: Clickbank In-Text Affiliate Links
 Plugin URI: http://www.uContext.com
-Description: Automatically finds keyword phrases and converts them into contextual in-text Clickbank affiliate links.
+Description: Locates keywords in your content and turns them into affiliate links to contextually related Clickbank offers with your affiliate ID
 Author: Summit Media Concepts LLC
 Author URI: http://www.SummitMediaConcepts.com
 Tags: clickbank, affiliate, links, ads, advertising, post, context, contextual, intext
-Version: 1.2
+Version: 1.3
 
 Automatically finds keyword phrases and converts them into contextual in-text Clickbank affiliate links.
 
 == Description ==
 
-This plug-in uses the uContext contextual engine to find keyword phrases in the body of your posts and 
-converts them into cloaked Clickbank affiliate intext links with your Clickbank nickname.  uContext delivers 
-links to Clickbank marketplace products that contextually match the content of your blog post.
+uContext is a free service that locates keywords in your content and turns them into affiliate 
+links that take your visitors to contextually related Clickbank offers with your affiliate ID.  
+Why make a couple cents per click when you could potentially make $15, $20, or more per sale 
+with one of the most popular affiliate systems in the world.
+
+You're in control. Unlike other in-text contextual advertising services, you decide how many 
+links are created and what those links look like. Add your own Clickbank tracking ID and refine 
+the criteria uContext uses to match offers.
+
+uContext is a perfect solution for ad blindness. In-text links get clicked because they're right 
+where your visitors are looking when they read your page content.
 
 This is a great plug-in if you have a blog with lots of posts, or you have lots of blogs and need 
 something quick, easy, and effective to monetize them.
 
-Installation is simple. Get your free API Key from http://www.ucontext.com in just a few minutes.
+Installation is simple. Get your FREE API Key from http://www.ucontext.com in just a few minutes.
 
 == Installation ==
 
