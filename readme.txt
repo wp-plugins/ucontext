@@ -4,7 +4,7 @@ Plugin URI: http://www.uContext.com
 Description: Locates keywords in your content and turns them into affiliate links to contextually related Clickbank offers with your affiliate ID
 Author: Summit Media Concepts LLC
 Author URI: http://www.SummitMediaConcepts.com
-Tags: clickbank, affiliate, links, ads, advertising, post, context, contextual, intext
+Tags: clickbank, affiliate, contextual, links, ads, advertising, post, context, contextual, intext
 Version: 1.3
 
 Automatically finds keyword phrases and converts them into contextual in-text Clickbank affiliate links.
@@ -34,7 +34,7 @@ Installation is simple. Get your FREE API Key from http://www.ucontext.com in ju
 
 2. Log-in to uContext to get your API Key
 
-3. Unzip this file in your wp-content/plugins directory
+3. Unzip this plug-in into your wp-content/plugins directory
 
 4. Log-in to your WordPress admin area to activate the plug-in
 
