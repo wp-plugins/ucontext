@@ -6,20 +6,20 @@
 
 /**
 
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 2 of the License, or
-	(at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
- */
+*/
 
 class uContext
 {
@@ -185,11 +185,14 @@ class uContext
 			$link_list = unserialize($this->socketPost($post));
 		}
 
-		foreach ($link_list as $key => $value)
+		if (is_array($link_list))
 		{
-			if (!trim($key))
+			foreach ($link_list as $key => $value)
 			{
-				unset($link_list[$key]);
+				if (!trim($key))
+				{
+					unset($link_list[$key]);
+				}
 			}
 		}
 
@@ -223,9 +226,12 @@ class uContext
 
 			if ($fp)
 			{
-				foreach ($post as $name => $value)
+				if (is_array($post))
 				{
-					$coded_post[] = urlencode($name).'='.urlencode($value);
+					foreach ($post as $name => $value)
+					{
+						$coded_post[] = urlencode($name).'='.urlencode($value);
+					}
 				}
 
 				$senddata = implode('&', $coded_post);
@@ -285,13 +291,16 @@ class uContext
 	{
 		if (preg_match_all('/\<a\ .*?\<\/a\>/is', $this->content, $matches))
 		{
-			foreach ($matches[0] as $match)
+			if (is_array($matches[0]))
 			{
-				$hash = '|'.md5($match).'|';
+				foreach ($matches[0] as $match)
+				{
+					$hash = '|'.md5($match).'|';
 
-				$this->mask_links_list[$hash] = $match;
+					$this->mask_links_list[$hash] = $match;
 
-				$this->content = str_replace($match, $hash, $this->content);
+					$this->content = str_replace($match, $hash, $this->content);
+				}
 			}
 		}
 	}
@@ -304,6 +313,24 @@ class uContext
 		{
 			if (preg_match_all('/\<'.$tag.'.*?\<\/'.$tag.'\>/is', $this->content, $matches))
 			{
+				if (is_array($matches[0]))
+				{
+					foreach ($matches[0] as $match)
+					{
+						$hash = '|'.md5($match).'|';
+
+						$this->mask_html_list[$hash] = $match;
+
+						$this->content = str_replace($match, $hash, $this->content);
+					}
+				}
+			}
+		}
+
+		if (preg_match_all('/\<.*?\>/is', $this->content, $matches))
+		{
+			if (is_array($matches[0]))
+			{
 				foreach ($matches[0] as $match)
 				{
 					$hash = '|'.md5($match).'|';
@@ -314,33 +341,27 @@ class uContext
 				}
 			}
 		}
-
-		if (preg_match_all('/\<.*?\>/is', $this->content, $matches))
-		{
-			foreach ($matches[0] as $match)
-			{
-				$hash = '|'.md5($match).'|';
-
-				$this->mask_html_list[$hash] = $match;
-
-				$this->content = str_replace($match, $hash, $this->content);
-			}
-		}
 	}
 
 	function unmaskHtml()
 	{
-		foreach ($this->mask_html_list as $hash => $match)
+		if (is_array($this->mask_html_list))
 		{
-			$this->content = str_replace($hash, $match, $this->content);
+			foreach ($this->mask_html_list as $hash => $match)
+			{
+				$this->content = str_replace($hash, $match, $this->content);
+			}
 		}
 	}
 
 	function unmaskLinks()
 	{
-		foreach ($this->mask_links_list as $hash => $match)
+		if (is_array($this->mask_html_list))
 		{
-			$this->content = str_replace($hash, $match, $this->content);
+			foreach ($this->mask_links_list as $hash => $match)
+			{
+				$this->content = str_replace($hash, $match, $this->content);
+			}
 		}
 	}
 
@@ -348,13 +369,16 @@ class uContext
 	{
 		$n_max_links = 0;
 
-		foreach ($this->keywords as $keyword => $keyword_data)
+		if (is_array($this->keywords))
 		{
-			$this->keywords[$keyword]['count'] = preg_match_all('/(^|[^a-z])(' . preg_quote($keyword) . ')([^a-z]|$)/is', $this->content, $matches);
+			foreach ($this->keywords as $keyword => $keyword_data)
+			{
+				$this->keywords[$keyword]['count'] = preg_match_all('/(^|[^a-z])(' . preg_quote($keyword) . ')([^a-z]|$)/is', $this->content, $matches);
 
-			$this->kw_totals[$keyword] = $this->keywords[$keyword]['count'];
+				$this->kw_totals[$keyword] = $this->keywords[$keyword]['count'];
 
-			$n_max_links += $this->keywords[$keyword]['count'];
+				$n_max_links += $this->keywords[$keyword]['count'];
+			}
 		}
 
 		if ($n_max_links < $this->max_links)
@@ -369,16 +393,19 @@ class uContext
 
 		while ($total < $this->max_links)
 		{
-			foreach ($this->kw_totals as $keyword => $count)
+			if (is_array($this->kw_totals))
 			{
-				if (intval($this->keywords[$keyword]['max']) < $count)
+				foreach ($this->kw_totals as $keyword => $count)
 				{
-					$this->keywords[$keyword]['max'] = intval($this->keywords[$keyword]['max']) + 1;
-					$total++;
-
-					if ($total == $max_links)
+					if (intval($this->keywords[$keyword]['max']) < $count)
 					{
-						break 2;
+						$this->keywords[$keyword]['max'] = intval($this->keywords[$keyword]['max']) + 1;
+						$total++;
+
+						if ($total == $max_links)
+						{
+							break 2;
+						}
 					}
 				}
 			}
@@ -387,37 +414,40 @@ class uContext
 
 	function addInlineLinks()
 	{
-		foreach ($this->keywords as $keyword => $keyword_data)
+		if (is_array($this->keywords))
 		{
-			if ($keyword_data['count'])
+			foreach ($this->keywords as $keyword => $keyword_data)
 			{
-				$this->keyword_data = $keyword_data;
-
-				$this->current_index = 0;
-				$this->current_keyword = $keyword;
-
-				if ($this->keywords[$keyword]['count'] > $this->keywords[$keyword]['max'])
+				if ($keyword_data['count'])
 				{
-					$inc = round($this->keywords[$keyword]['count'] / ($this->keywords[$keyword]['max'] + 1));
+					$this->keyword_data = $keyword_data;
 
-					$count = 0;
-					$running = 0;
+					$this->current_index = 0;
+					$this->current_keyword = $keyword;
 
-					while ($running <= $this->keywords[$keyword]['count'] && count($this->kw_indexes[$keyword]) < $this->keywords[$keyword]['max'])
+					if ($this->keywords[$keyword]['count'] > $this->keywords[$keyword]['max'])
 					{
-						$running += $inc;
-						$this->kw_indexes[$keyword][$running] = $running;
-					}
-				}
-				else
-				{
-					for ($i = 1; $i <= $this->keywords[$keyword]['max']; $i++)
-					{
-						$this->kw_indexes[$keyword][$i] = $i;
-					}
-				}
+						$inc = round($this->keywords[$keyword]['count'] / ($this->keywords[$keyword]['max'] + 1));
 
-				$this->content = preg_replace_callback('/(^|[^a-z])(' . preg_quote($keyword) . ')([^a-z]|$)/is', array($this, 'makeLink'), $this->content);
+						$count = 0;
+						$running = 0;
+
+						while ($running <= $this->keywords[$keyword]['count'] && count($this->kw_indexes[$keyword]) < $this->keywords[$keyword]['max'])
+						{
+							$running += $inc;
+							$this->kw_indexes[$keyword][$running] = $running;
+						}
+					}
+					else
+					{
+						for ($i = 1; $i <= $this->keywords[$keyword]['max']; $i++)
+						{
+							$this->kw_indexes[$keyword][$i] = $i;
+						}
+					}
+
+					$this->content = preg_replace_callback('/(^|[^a-z])(' . preg_quote($keyword) . ')([^a-z]|$)/is', array($this, 'makeLink'), $this->content);
+				}
 			}
 		}
 	}
