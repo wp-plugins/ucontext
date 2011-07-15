@@ -6,7 +6,7 @@ Description: Automatically finds keyword phrases and converts them into contextu
 Author: Summit Media Concepts LLC
 Author URI: http://www.SummitMediaConcepts.com
 Tags: clickbank, affiliate, links, ads, advertising, post, context, contextual
-Version: 1.5
+Version: 1.6
 */
 
 /**
