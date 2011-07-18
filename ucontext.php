@@ -89,7 +89,10 @@ function uContext_Settings()
 <td>
 	<input type="text" name="ucontext_api_key" value="<?php echo get_option('ucontext_api_key'); ?>" size="50" maxlength="32" /><br />
 	Sign-up for your API Key at <a href="http://www.uContext.com/<?php echo $aid; ?>" target="_blank">http://www.uContext.com</a>. This 
-	is required for the plug-in to work.
+	is required for the plug-in to work.<br />
+	<br />
+	Please watch the <a href="http://www.ucontext.com/start_here/" target="_blank" style="color: #900;">getting started video here...</a><br />
+	For additional help, please contact us using our <a href="http://www.ucontext.com/support/" target="_blank">support system</a>.	
 </td>
 </tr>
 
@@ -108,19 +111,15 @@ function uContext_Settings()
 ?>
 
 <tr valign="top">
-<td scope="row" colspan="2"><br /></td>
-</tr>
-
-<tr valign="top">
-<td scope="row" colspan="2" style="color: #FFF; background-color: #999; font-size: 12px; font-weight: bold; padding: 2px 10px;">In-Text Settings</td>
+<td scope="row" colspan="2" style="color: #FFF; background-color: #999; font-size: 12px; font-weight: bold; padding: 2px 10px;">Optional Settings</td>
 </tr>
 
 <tr valign="top">
 <th scope="row">Anchor CSS Class</th>
 <td>
 	<input type="text" name="ucontext_intext_class" value="<?php echo get_option('ucontext_intext_class'); ?>" /><br />
-	This is a style sheet class to included on all links (anchor tags) created by this plug-in.  Use this to customize 
-	how your links look within your content.  This is a completely OPTIONAL setting.
+	<div style="width: 400px;">This is a style sheet class to included on all links (anchor tags) created by this plug-in.  Use this to customize 
+	how your links look within your content.</div>
 </td>
 </tr>
 
