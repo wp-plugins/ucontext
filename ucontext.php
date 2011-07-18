@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: uContext
+Plugin Name: uContext - Clickbank In-Text Affiliate Links
 Plugin URI: http://www.uContext.com
 Description: Automatically finds keyword phrases and converts them into contextual in-text Clickbank affiliate links.
 Author: Summit Media Concepts LLC

@@ -1,5 +1,5 @@
 === Plugin Name ===
-Plugin Name: Clickbank In-Text Affiliate Links
+Plugin Name: uContext - Clickbank In-Text Affiliate Links
 Plugin URI: http://www.uContext.com
 Description: Locates keywords in your content and turns them into affiliate links to contextually related Clickbank offers with your affiliate ID
 Author: Summit Media Concepts LLC
