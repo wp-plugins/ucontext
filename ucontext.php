@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Clickbank In-Text Affiliate Links
+Plugin Name: uContext
 Plugin URI: http://www.uContext.com
 Description: Automatically finds keyword phrases and converts them into contextual in-text Clickbank affiliate links.
 Author: Summit Media Concepts LLC
@@ -88,7 +88,8 @@ function uContext_Settings()
 <th scope="row">API Key</th>
 <td>
 	<input type="text" name="ucontext_api_key" value="<?php echo get_option('ucontext_api_key'); ?>" size="50" maxlength="32" /><br />
-	Sign-up for your API Key at <a href="http://www.uContext.com/<?php echo $aid; ?>" target="_blank">http://www.uContext.com</a>
+	Sign-up for your API Key at <a href="http://www.uContext.com/<?php echo $aid; ?>" target="_blank">http://www.uContext.com</a>. This 
+	is required for the plug-in to work.
 </td>
 </tr>
 
@@ -118,7 +119,8 @@ function uContext_Settings()
 <th scope="row">Anchor CSS Class</th>
 <td>
 	<input type="text" name="ucontext_intext_class" value="<?php echo get_option('ucontext_intext_class'); ?>" /><br />
-	This is your CSS class to included on all links (anchor tags) created by this plug-in
+	This is a style sheet class to included on all links (anchor tags) created by this plug-in.  Use this to customize 
+	how your links look within your content.  This is a completely OPTIONAL setting.
 </td>
 </tr>
 
@@ -126,7 +128,7 @@ function uContext_Settings()
 <th scope="row">Use nofollow</th>
 <td>
 	<input type="checkbox" name="ucontext_nofollow" value="1" <?php if (intval(get_option('ucontext_nofollow'))){ echo ' checked'; } ?> /><br />
-	Includes "nofollow" attribute on links (anchor tags) created by this plug-in
+	Includes "nofollow" attribute on links (anchor tags) created by this plug-in.
 </td>
 </tr>
 
@@ -134,7 +136,7 @@ function uContext_Settings()
 <th scope="row">Open New Window</th>
 <td>
 	<input type="checkbox" name="ucontext_new_window" value="1" <?php if (intval(get_option('ucontext_new_window'))){ echo ' checked'; } ?> /><br />
-	Includes target="_blank" attribute on links (anchor tags) created by this plug-in
+	Includes target="_blank" attribute on links (anchor tags) created by this plug-in.
 </td>
 </tr>
 
