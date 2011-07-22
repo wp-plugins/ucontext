@@ -104,6 +104,11 @@ class uContext
 		$this->post['body'] = trim($body);
 	}
 
+	function setCanonical($canonical)
+	{
+		$this->post['canonical'] = trim($canonical);
+	}
+
 	function setUrl($url)
 	{
 		$this->post['url'] = trim($url);

@@ -1,36 +1,36 @@
 <?php
 /*
-Plugin Name: uContext - Clickbank In-Text Affiliate Links
-Plugin URI: http://www.uContext.com
-Description: Automatically finds keyword phrases and converts them into contextual in-text Clickbank affiliate links.
-Author: Summit Media Concepts LLC
-Author URI: http://www.SummitMediaConcepts.com
-Tags: clickbank, affiliate, links, ads, advertising, post, context, contextual
-Version: 1.7
-*/
+ Plugin Name: uContext - Clickbank In-Text Affiliate Links
+ Plugin URI: http://www.uContext.com
+ Description: Automatically finds keyword phrases and converts them into contextual in-text Clickbank affiliate links.
+ Author: Summit Media Concepts LLC
+ Author URI: http://www.SummitMediaConcepts.com
+ Tags: clickbank, affiliate, links, ads, advertising, post, context, contextual
+ Version: 1.8
+ */
 
 /**
 
-	Copyright 2010  Summit Media Concepts LLC (email : info@SummitMediaConcepts.com)
+Copyright 2010  Summit Media Concepts LLC (email : info@SummitMediaConcepts.com)
 
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 2 of the License, or
-	(at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
- */
+*/
 
 require dirname(__FILE__).'/ucontext_library.php';
 
-add_action('widgets_init', create_function('', 'return register_widget("uContext_Widget");'));
+//add_action('widgets_init', create_function('', 'return register_widget("uContext_Widget");'));
 
 add_action('admin_menu', 'uContext_addAdminPages');
 
@@ -75,83 +75,89 @@ function uContext_Settings()
 			$aid = '?aid='.$affiliate_token;
 		}
 	}
-?>
+	?>
 <div class="wrap">
 <h2>uContext Settings</h2>
 
-<form method="post" action="options.php">
-<?php settings_fields('ucontext-settings-group'); ?>
+<form method="post" action="options.php"><?php settings_fields('ucontext-settings-group'); ?>
 
 <table class="form-table">
 
-<tr valign="top">
-<th scope="row">API Key</th>
-<td>
-	<input type="text" name="ucontext_api_key" value="<?php echo get_option('ucontext_api_key'); ?>" size="50" maxlength="32" /><br />
-	Sign-up for your API Key at <a href="http://www.uContext.com/<?php echo $aid; ?>" target="_blank">http://www.uContext.com</a>. This 
-	is required for the plug-in to work.<br />
-	<br />
-	Please watch the <a href="http://www.ucontext.com/start_here/" target="_blank" style="color: #900;">getting started video here...</a><br />
-	For additional help, please contact us using our <a href="http://www.ucontext.com/support/" target="_blank">support system</a>.	
-</td>
-</tr>
+	<tr valign="top">
+		<th scope="row">API Key</th>
+		<td><input type="text" name="ucontext_api_key"
+			value="<?php echo get_option('ucontext_api_key'); ?>" size="50"
+			maxlength="32" /><br />
+		Sign-up for your API Key at <a
+			href="http://www.uContext.com/<?php echo $aid; ?>" target="_blank">http://www.uContext.com</a>.
+		This is required for the plug-in to work.<br />
+		<br />
+		Please watch the <a href="http://www.ucontext.com/start_here/"
+			target="_blank" style="color: #900;">getting started video here...</a><br />
+		For additional help, please contact us using our <a
+			href="http://www.ucontext.com/support/" target="_blank">support
+		system</a>.</td>
+	</tr>
 
-<?php
+	<?php
 	if ($multisite && $current_site->blog_id == $current_blog->blog_id)
 	{
-?>
-<tr valign="top">
-<th scope="row">Affiliate Code</th>
-<td>
-	<input type="text" name="ucontext_code" value="<?php echo get_option('ucontext_code'); ?>" size="35" maxlength="32" />
-</td>
-</tr>
-<?php
+		?>
+	<tr valign="top">
+		<th scope="row">Affiliate Code</th>
+		<td><input type="text" name="ucontext_code"
+			value="<?php echo get_option('ucontext_code'); ?>" size="35"
+			maxlength="32" /></td>
+	</tr>
+	<?php
 	}
-?>
+	?>
 
-<tr valign="top">
-<td scope="row" colspan="2" style="color: #FFF; background-color: #999; font-size: 12px; font-weight: bold; padding: 2px 10px;">Optional Settings</td>
-</tr>
+	<tr valign="top">
+		<td scope="row" colspan="2"
+			style="color: #FFF; background-color: #999; font-size: 12px; font-weight: bold; padding: 2px 10px;">Optional
+		Settings</td>
+	</tr>
 
-<tr valign="top">
-<th scope="row">Anchor CSS Class</th>
-<td>
-	<input type="text" name="ucontext_intext_class" value="<?php echo get_option('ucontext_intext_class'); ?>" /><br />
-	<div style="width: 400px;">This is a style sheet class to included on all links (anchor tags) created by this plug-in.  Use this to customize 
-	how your links look within your content.</div>
-</td>
-</tr>
+	<tr valign="top">
+		<th scope="row">Anchor CSS Class</th>
+		<td><input type="text" name="ucontext_intext_class"
+			value="<?php echo get_option('ucontext_intext_class'); ?>" /><br />
+		<div style="width: 400px;">This is a style sheet class to included on
+		all links (anchor tags) created by this plug-in. Use this to customize
+		how your links look within your content.</div>
+		</td>
+	</tr>
 
-<tr valign="top">
-<th scope="row">Use nofollow</th>
-<td>
-	<input type="checkbox" name="ucontext_nofollow" value="1" <?php if (intval(get_option('ucontext_nofollow'))){ echo ' checked'; } ?> /><br />
-	Includes "nofollow" attribute on links (anchor tags) created by this plug-in.
-</td>
-</tr>
+	<tr valign="top">
+		<th scope="row">Use nofollow</th>
+		<td><input type="checkbox" name="ucontext_nofollow" value="1"
+		<?php if (intval(get_option('ucontext_nofollow'))){ echo ' checked'; } ?> /><br />
+		Includes "nofollow" attribute on links (anchor tags) created by this
+		plug-in.</td>
+	</tr>
 
-<tr valign="top">
-<th scope="row">Open New Window</th>
-<td>
-	<input type="checkbox" name="ucontext_new_window" value="1" <?php if (intval(get_option('ucontext_new_window'))){ echo ' checked'; } ?> /><br />
-	Includes target="_blank" attribute on links (anchor tags) created by this plug-in.
-</td>
-</tr>
+	<tr valign="top">
+		<th scope="row">Open New Window</th>
+		<td><input type="checkbox" name="ucontext_new_window" value="1"
+		<?php if (intval(get_option('ucontext_new_window'))){ echo ' checked'; } ?> /><br />
+		Includes target="_blank" attribute on links (anchor tags) created by
+		this plug-in.</td>
+	</tr>
 
 </table>
 
-<input type="hidden" name="action" value="update" />
-<input type="hidden" name="page_options" value="ucontext_intext_class,ucontext_nofollow" />
+<input type="hidden" name="action" value="update" /> <input
+	type="hidden" name="page_options"
+	value="ucontext_intext_class,ucontext_nofollow" />
 
-<p class="submit">
-<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
-</p>
+<p class="submit"><input type="submit" class="button-primary"
+	value="<?php _e('Save Changes') ?>" /></p>
 
 </form>
 </div>
 
-<?php
+		<?php
 }
 
 class uContext_Widget extends WP_Widget
@@ -213,6 +219,7 @@ function uContext_filterInText($body)
 	$uc->setNewWindow(get_option('ucontext_new_window'));
 	$uc->setTitle($post->post_title);
 	$uc->setBody($body);
+	$uc->setCanonical(get_post_meta($post->ID, '_canonical', true));
 
 	if (strtolower($_SERVER['HTTPS']) == 'on')
 	{
