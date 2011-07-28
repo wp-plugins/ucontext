@@ -5,7 +5,7 @@ Description: Locates keywords in your content and turns them into affiliate link
 Author: Summit Media Concepts LLC
 Author URI: http://www.SummitMediaConcepts.com
 Tags: clickbank, affiliate, contextual, links, ads, advertising, post, context, contextual, intext
-Version: 1.8
+Version: 1.9
 
 Automatically finds keyword phrases and converts them into contextual in-text Clickbank affiliate links.
 

@@ -2,25 +2,27 @@
 
 /**
 
-	Copyright 2010  Summit Media Concepts LLC (email : info@SummitMediaConcepts.com)
+Copyright 2010  Summit Media Concepts LLC (email : info@SummitMediaConcepts.com)
 
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 2 of the License, or
-	(at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
- */
+*/
 
 class uContext
 {
+	var $version = '1.9';
+
 	var $content = '';
 
 	var $keywords = array();
@@ -45,14 +47,16 @@ class uContext
 
 	var $settings = array();
 
+	var $data = array();
+
 
 	function getSnippet()
 	{
 		$this->post['format'] = 'XHTML';
 
-		$result = uContext::postToServer($this->post);
+		$link_list = uContext::postToServer($this->post);
 
-		return $result;
+		return $link_list;
 	}
 
 	function getInText()
@@ -104,9 +108,9 @@ class uContext
 		$this->post['body'] = trim($body);
 	}
 
-	function setCanonical($canonical)
+	function setPermalink($permalink)
 	{
-		$this->post['canonical'] = trim($canonical);
+		$this->post['permalink'] = trim($permalink);
 	}
 
 	function setUrl($url)
@@ -141,7 +145,7 @@ class uContext
 
 	function setNoFollow($nofollow)
 	{
-		$this->settings['$nofollow'] = intval($nofollow);
+		$this->settings['nofollow'] = intval($nofollow);
 	}
 
 	function setNewWindow($new_window)
@@ -149,53 +153,83 @@ class uContext
 		$this->settings['new_window'] = intval($new_window);
 	}
 
+	function setCacheData($data)
+	{
+		$this->settings['cache'] = $data;
+	}
+
 	function postToServer($post)
 	{
-		if ($post['url'])
+		if (is_array($this->settings['cache']) && is_array($this->settings['cache']['link_list']))
 		{
-			if (substr($post['url'], 0, 5) == 'https')
-			{
-				$post['https'] = 'on';
-			}
-
-			$temp = str_replace('http://', '', $post['url']);
-			$temp = str_replace('https://', '', $temp);
-
-			$post['http_host'] = str_replace(stristr($temp, '/'), '', $temp);
-
-			if (!$post['http_host'])
-			{
-				$post['http_host'] = $temp;
-			}
-
-			$post['request_uri'] = stristr($temp, '/');
-
-			unset($post['url']);
+			$link_list = $this->settings['cache']['link_list'];
 		}
 		else
 		{
-			$post['https']			= $_SERVER['HTTPS'];
-			$post['http_host']		= $_SERVER['HTTP_HOST'];
-			$post['request_uri']	= $_SERVER['REQUEST_URI'];
-		}
-
-		if (intval(extension_loaded('curl')))
-		{
-			$link_list = unserialize($this->curlPost($post));
-		}
-		else
-		{
-			$link_list = unserialize($this->socketPost($post));
-		}
-
-		if (is_array($link_list))
-		{
-			foreach ($link_list as $key => $value)
+			if ($post['url'])
 			{
-				if (!trim($key))
+				if (substr($post['url'], 0, 5) == 'https')
 				{
-					unset($link_list[$key]);
+					$post['https'] = 'on';
 				}
+
+				$temp = str_replace('http://', '', $post['url']);
+				$temp = str_replace('https://', '', $temp);
+
+				$post['http_host'] = str_replace(stristr($temp, '/'), '', $temp);
+
+				if (!$post['http_host'])
+				{
+					$post['http_host'] = $temp;
+				}
+
+				$post['request_uri'] = stristr($temp, '/');
+
+				unset($post['url']);
+			}
+			else
+			{
+				$post['https']			= $_SERVER['HTTPS'];
+				$post['http_host']		= $_SERVER['HTTP_HOST'];
+				$post['request_uri']	= $_SERVER['REQUEST_URI'];
+			}
+
+			$post['version'] = $this->version;
+
+			if (intval(extension_loaded('curl')))
+			{
+				$data = unserialize($this->curlPost($post));
+			}
+			else
+			{
+				$data = unserialize($this->socketPost($post));
+			}
+
+			if (isset($data['link_list']))
+			{
+				$this->data = $data;
+
+				$link_list = $data['link_list'];
+			}
+			else
+			{
+				$link_list = $data;
+			}
+
+			if (is_array($link_list))
+			{
+				foreach ($link_list as $key => $value)
+				{
+					if (!trim($key))
+					{
+						unset($link_list[$key]);
+					}
+				}
+			}
+
+			if (isset($data['link_list']))
+			{
+				$this->data['link_list'] = $link_list;
 			}
 		}
 

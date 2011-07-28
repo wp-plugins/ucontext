@@ -6,7 +6,7 @@
  Author: Summit Media Concepts LLC
  Author URI: http://www.SummitMediaConcepts.com
  Tags: clickbank, affiliate, links, ads, advertising, post, context, contextual
- Version: 1.8
+ Version: 1.9
  */
 
 /**
@@ -28,7 +28,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
+define('UCONTEXT_VERSION', '1.9');
+
 require dirname(__FILE__).'/ucontext_library.php';
+
+add_action('admin_init', 'uContext_activate');
 
 //add_action('widgets_init', create_function('', 'return register_widget("uContext_Widget");'));
 
@@ -57,7 +61,6 @@ function uContext_registerSettings()
 	register_setting('ucontext-settings-group', 'ucontext_new_window');
 }
 
-
 function uContext_Settings()
 {
 	$multisite = intval(constant('MULTISITE'));
@@ -75,6 +78,13 @@ function uContext_Settings()
 			$aid = '?aid='.$affiliate_token;
 		}
 	}
+	
+	if (intval($_REQUEST['clear_cache']))
+	{
+		global $wpdb;
+		$wpdb->query('DELETE FROM '.$wpdb->base_prefix.'ucontext_cache');
+	}
+	
 	?>
 <div class="wrap">
 <h2>uContext Settings</h2>
@@ -124,8 +134,12 @@ function uContext_Settings()
 		<td><input type="text" name="ucontext_intext_class"
 			value="<?php echo get_option('ucontext_intext_class'); ?>" /><br />
 		<div style="width: 400px;">This is a style sheet class to included on
-		all links (anchor tags) created by this plug-in. Use this to customize
-		how your links look within your content.</div>
+		all links (anchor tags) created by this plug-in.<br />
+		HTML will look like:<br />
+		<pre>&lt;a href="link_to_product" class="<b>your_css_class</b>"&gt;keyord_phrase&lt;/a&gt;</pre>
+		<a href="http://www.w3schools.com/css/" target="_blank">Click here for
+		more information about CSS</a><br />
+		</div>
 		</td>
 	</tr>
 
@@ -147,12 +161,12 @@ function uContext_Settings()
 
 </table>
 
-<input type="hidden" name="action" value="update" /> <input
-	type="hidden" name="page_options"
-	value="ucontext_intext_class,ucontext_nofollow" />
+<input type="hidden" name="action" value="update" /> <input type="hidden" name="page_options" value="ucontext_intext_class,ucontext_nofollow" />
 
-<p class="submit"><input type="submit" class="button-primary"
-	value="<?php _e('Save Changes') ?>" /></p>
+<p class="submit">
+	<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+	<input type="button" value="<?php _e('Clear Cache') ?>" onclick="window.location.href='options-general.php?page=ucontext&clear_cache=1'"/>
+</p>
 
 </form>
 </div>
@@ -211,7 +225,7 @@ function uContext_filterInText($body)
 {
 	$uc = new uContext();
 
-	global $post;
+	global $post, $wpdb;
 
 	$uc->setApiKey(get_option('ucontext_api_key'));
 	$uc->setInTextClass(get_option('ucontext_intext_class'));
@@ -219,7 +233,36 @@ function uContext_filterInText($body)
 	$uc->setNewWindow(get_option('ucontext_new_window'));
 	$uc->setTitle($post->post_title);
 	$uc->setBody($body);
-	$uc->setCanonical(get_post_meta($post->ID, '_canonical', true));
+
+	$permalink = get_permalink($post->ID);
+
+	$uc->setPermalink($permalink);
+
+	$config = get_option('ucontext_config');
+
+	if ($config && !is_array($config))
+	{
+		$config = unserialize($config);
+	}
+
+	$use_cache = FALSE;
+	$cache_valid = FALSE;
+
+	if (isset($config['use_cache']) && intval($config['use_cache']))
+	{
+		$use_cache = TRUE;
+
+		$data = $wpdb->get_var('SELECT data FROM '.$wpdb->base_prefix.'ucontext_cache WHERE post_id = '.intval($post->ID).' AND expire > '.time());
+
+		if ($data)
+		{
+			$data = unserialize($data);
+			$data['from_cache'] = 1;
+
+			$uc->setCacheData($data);
+			$cache_valid = TRUE;
+		}
+	}
 
 	if (strtolower($_SERVER['HTTPS']) == 'on')
 	{
@@ -230,7 +273,21 @@ function uContext_filterInText($body)
 		$uc->setUrl('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 	}
 
-	return $uc->getInText();
+	$result = $uc->getInText();
+
+	if (is_array($uc->data) && count($uc->data) && $uc->data['use_cache'] && !$cache_valid)
+	{
+		$wpdb->query('REPLACE INTO '.$wpdb->base_prefix.'ucontext_cache (post_id, data, expire) VALUES ('.intval($post->ID).', "'.addslashes(serialize($uc->data)).'", '.intval($uc->data['expire']).')');
+
+		$config = $uc->data;
+		unset($config['link_list']);
+
+		update_option('ucontext_config', serialize($config));
+	}
+
+	$wpdb->query('DELETE FROM '.$wpdb->base_prefix.'ucontext_cache WHERE expire < '.time());
+
+	return $result;
 }
 
 function uContext_init()
@@ -238,5 +295,31 @@ function uContext_init()
 	if (!get_option('ucontext_api_key'))
 	{
 		echo "<div id='ucontext-warning' class='updated fade'><p><strong>".__('uContext is almost ready.')."</strong> ".sprintf(__('You must <a href="%1$s">enter your API Key</a> for it to work.'), "options-general.php?page=ucontext")."</p></div>";
+	}
+}
+
+function uContext_activate()
+{
+	if (UCONTEXT_VERSION != get_option('ucontext_version'))
+	{
+		global $wpdb;
+
+		if (file_exists(ABSPATH.'/wp-admin/upgrade-functions.php'))
+		{
+			require_once(ABSPATH.'/wp-admin/upgrade-functions.php');
+		}
+		else
+		{
+			require_once(ABSPATH.'/wp-admin/includes/upgrade.php');
+		}
+
+		dbDelta('CREATE TABLE `'.$wpdb->base_prefix.'ucontext_cache` (
+			`post_id` int(11) unsigned NOT NULL,
+			`data` text,
+			`expire` int(11) unsigned NOT NULL,
+			PRIMARY KEY (`post_id`)
+		);');
+
+		update_option('ucontext_version', UCONTEXT_VERSION);
 	}
 }
