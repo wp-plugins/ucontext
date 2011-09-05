@@ -63,7 +63,12 @@ function uContext_registerSettings()
 
 function uContext_Settings()
 {
-	$multisite = intval(constant('MULTISITE'));
+	$multisite = 0;
+
+	if (defined('MULTISITE'))
+	{
+		$multisite = intval(constant('MULTISITE'));
+	}
 
 	$aid = '';
 
@@ -78,13 +83,13 @@ function uContext_Settings()
 			$aid = '?aid='.$affiliate_token;
 		}
 	}
-	
+
 	if (intval($_REQUEST['clear_cache']))
 	{
 		global $wpdb;
 		$wpdb->query('DELETE FROM '.$wpdb->base_prefix.'ucontext_cache');
 	}
-	
+
 	?>
 <div class="wrap">
 <h2>uContext Settings</h2>
@@ -161,11 +166,14 @@ function uContext_Settings()
 
 </table>
 
-<input type="hidden" name="action" value="update" /> <input type="hidden" name="page_options" value="ucontext_intext_class,ucontext_nofollow" />
+<input type="hidden" name="action" value="update" /> <input
+	type="hidden" name="page_options"
+	value="ucontext_intext_class,ucontext_nofollow" />
 
-<p class="submit">
-	<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
-	<input type="button" value="<?php _e('Clear Cache') ?>" onclick="window.location.href='options-general.php?page=ucontext&clear_cache=1'"/>
+<p class="submit"><input type="submit" class="button-primary"
+	value="<?php _e('Save Changes') ?>" /> <input type="button"
+	value="<?php _e('Clear Cache') ?>"
+	onclick="window.location.href='options-general.php?page=ucontext&clear_cache=1'" />
 </p>
 
 </form>
@@ -321,5 +329,18 @@ function uContext_activate()
 		);');
 
 		update_option('ucontext_version', UCONTEXT_VERSION);
+	}
+
+	if (!get_option('ucontext_api_key'))
+	{
+		$api_key_file = dirname(__FILE__).'/api_key.txt';
+		if (is_file($api_key_file))
+		{
+			$api_key = file_get_contents($api_key_file);
+			if (strlen(trim($api_key)) == 32)
+			{
+				update_option('ucontext_api_key', $api_key);
+			}
+		}
 	}
 }
