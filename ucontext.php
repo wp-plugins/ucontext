@@ -6,7 +6,7 @@
  Author: Summit Media Concepts LLC
  Author URI: http://www.SummitMediaConcepts.com
  Tags: clickbank, affiliate, links, ads, advertising, post, context, contextual
- Version: 1.9
+ Version: 2.0
  */
 
 /**
@@ -34,7 +34,7 @@ require dirname(__FILE__).'/ucontext_library.php';
 
 add_action('admin_init', 'uContext_activate');
 
-//add_action('widgets_init', create_function('', 'return register_widget("uContext_Widget");'));
+add_action('widgets_init', create_function('', 'return register_widget("uContext_Widget");'));
 
 add_action('admin_menu', 'uContext_addAdminPages');
 
@@ -63,12 +63,7 @@ function uContext_registerSettings()
 
 function uContext_Settings()
 {
-	$multisite = 0;
-
-	if (defined('MULTISITE'))
-	{
-		$multisite = intval(constant('MULTISITE'));
-	}
+	$multisite = intval(constant('MULTISITE'));
 
 	$aid = '';
 
@@ -188,11 +183,11 @@ class uContext_Widget extends WP_Widget
 	function uContext_Widget()
 	{
 		$widget_ops = array(
-		'classname' => 'uContext',
-		'description' => 'Display your uContext snippets'
+		'classname' => 'uContext - CB HopAds',
+		'description' => 'Let uContext auto-fill your Clickbank HopAd keywords'
 		);
 
-		parent::WP_Widget(false, $name = 'uContext', $widget_ops);
+		parent::WP_Widget(false, $name = 'uContext - CB HopAds', $widget_ops);
 	}
 
 	function widget($args, $instance)
@@ -200,20 +195,25 @@ class uContext_Widget extends WP_Widget
 		extract($args);
 		extract($instance);
 
-		global $single, $post;
+		global $wpdb, $post;
 
-		$uc = new uContext();
-		$uc->setApiKey(get_option('ucontext_api_key'));
-		$uc->setSnippetID($ucontext_snippet_id);
-		$uc->setTitle($post->post_title);
-		$uc->setBody($post->post_content);
+		$data = $wpdb->get_var('SELECT data FROM '.$wpdb->base_prefix.'ucontext_cache WHERE post_id = '.intval($post->ID));
 
-		echo $uc->getSnippet();
+		if ($data)
+		{
+			$data = unserialize($data);
+
+			$keywords = array_keys($data['link_list']);
+
+			$instance['ucontext_hopad_code'] = preg_replace('/hopfeed_keywords\=\'.*?\';/is', 'hopfeed_keywords=\''.implode(',', $keywords).'\';', $instance['ucontext_hopad_code']);
+				
+			echo $instance['ucontext_hopad_code'];
+		}
 	}
 
 	function update($new_instance, $old_instance)
 	{
-		$new_instance['ucontext_snippet_id'] = intval($new_instance['ucontext_snippet_id']);
+		$new_instance['ucontext_hopad_code'] = trim($new_instance['ucontext_hopad_code']);
 
 		return $new_instance;
 	}
@@ -222,8 +222,8 @@ class uContext_Widget extends WP_Widget
 	{
 		echo '
 		<p>
-			<label for="' . $this->get_field_id('ucontext_snippet_id') . '">Snippet ID:</label>
-			<input id="' . $this->get_field_id('ucontext_snippet_id') . '" name="' . $this->get_field_name('ucontext_snippet_id') . '" value="' . $instance['ucontext_snippet_id'] . '" style="width: 100px;" />
+			<label for="' . $this->get_field_id('ucontext_hopad_code') . '">HopAd Code:</label>
+			<textarea id="' . $this->get_field_id('ucontext_hopad_code') . '" name="' . $this->get_field_name('ucontext_hopad_code') . '" style="width: 100%;">' . $instance['ucontext_hopad_code'] . '</textarea>
 		</p>
 		';
 	}

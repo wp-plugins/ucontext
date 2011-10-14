@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class uContext
 {
-	var $version = '1.9';
+	var $version = '2.0';
 
 	var $content = '';
 
