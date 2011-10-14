@@ -12,7 +12,7 @@ Automatically finds keyword phrases and converts them into contextual in-text Cl
 == Description ==
 
 uContext is a free service that locates keywords in your content and turns them into affiliate 
-links that take your visitors to contextually related Clickbank offers with your affiliate ID.  
+links that take your visitors to contextually related Clickbank offers with your affiliate ID. 
 Why make a couple cents per click when you could potentially make $15, $20, or more per sale 
 with one of the most popular affiliate systems in the world.
 
