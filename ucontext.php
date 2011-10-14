@@ -206,6 +206,7 @@ class uContext_Widget extends WP_Widget
 			$keywords = array_keys($data['link_list']);
 
 			$instance['ucontext_hopad_code'] = preg_replace('/hopfeed_keywords\=\'.*?\';/is', 'hopfeed_keywords=\''.implode(',', $keywords).'\';', $instance['ucontext_hopad_code']);
+			$instance['ucontext_hopad_code'] = preg_replace('/hopfeed_tab1_keywords\=\'.*?\';/is', 'hopfeed_tab1_keywords=\''.implode(',', $keywords).'\';', $instance['ucontext_hopad_code']);
 				
 			echo $instance['ucontext_hopad_code'];
 		}
