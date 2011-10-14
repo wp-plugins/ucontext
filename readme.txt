@@ -1,5 +1,5 @@
 === Plugin Name ===
-Plugin Name: uContext - Clickbank In-Text Affiliate Links and auto-fill HopAd keywords
+Plugin Name: uContext - Clickbank In-Text Affiliate Links and HopAds
 Plugin URI: http://www.uContext.com
 Description: Turns keywords in your content into contexutally related in-text Clickbank affiliate links and auto-generates your Clickbank HopAd keywords
 Author: Summit Media Concepts LLC
