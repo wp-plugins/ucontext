@@ -1,5 +1,5 @@
 === Plugin Name ===
-Plugin Name: uContext - Clickbank In-Text Affiliate Links and HopAds
+Plugin Name: uContext - Clickbank In-Text Links and HopAds
 Plugin URI: http://www.uContext.com
 Description: Turns keywords in your content into contexutally related in-text Clickbank affiliate links and auto-generates your Clickbank HopAd keywords
 Author: Summit Media Concepts LLC
@@ -12,11 +12,12 @@ Automatically finds keyword phrases and converts them into contextual in-text Cl
 == Description ==
 
 uContext is a free service that locates keywords in your content and turns them into affiliate 
-links that take your visitors to contextually related Clickbank offers with your affiliate ID. 
+links that take your visitors to contextually related Clickbank offers with your affiliate ID.
+
 Why make a couple cents per click when you could potentially make $15, $20, or more per sale 
 with one of the most popular affiliate systems in the world.
 
-*** Now supports Clickbank HopAds as a widget *** 
+NOW SUPPORTS CLICKBANK HOPADS
 As you may know, when you create your HopAd code at the Clickbank website you have to choose your 
 keywords or any old random ads show up. But, what if each post in your blog has different keywords? 
 Let uContext auto-fill with contextual keywords. All you have to do is get your HopAd code at 
