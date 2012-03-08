@@ -2,10 +2,10 @@
 Plugin Name: uContext - Clickbank In-Text Links and HopAds
 Plugin URI: http://www.uContext.com
 Description: Turns keywords in your content into contexutally related in-text Clickbank affiliate links and auto-generates your Clickbank HopAd keywords
-Author: Summit Media Concepts LLC
-Author URI: http://www.SummitMediaConcepts.com
-Tags: clickbank, affiliate, contextual, links, ads, advertising, post, context, contextual, intext
-Version: 2.0
+Author: uContext.com
+Author URI: http://www.uContext.com
+Tags: clickbank, affiliate, contextual, links, ads, advertising, context, intext, hopads
+Version: 2.1
 
 Automatically finds keyword phrases and converts them into contextual in-text Clickbank affiliate links and auto-generates your Clickbank HopAd keywords.
 
@@ -39,12 +39,25 @@ Installation is simple. Get your FREE API Key from http://www.ucontext.com in ju
 
 1. Sign-up at http://www.ucontext.com
 
-2. Log-in to uContext to get your API Key
+2. Click the link in your activation email
 
-3. Unzip this plug-in into your wp-content/plugins directory
+3. Get your API Key from the welcome email you'll receive shortly after activation
 
-4. Log-in to your WordPress admin area to activate the plug-in
+4. Unzip this plug-in into your wp-content/plugins directory
 
-5. Configure the "uContext" plug-in under the "Settings" menu
+5. Log-in to your WordPress admin area to activate the plug-in
+
+6. Configure the "uContext" plug-in under the "Settings" menu
 				
 !!! Remember: You must set the API Key in the Settings !!!
+
+== Changelog ==
+
+= 2.1 =
+* Plug-in will now display messages returned from the uContext service indicating issues with your API Key, member account, website configuratin, and post/page content
+* Will replace first tab in tabbed HopAds with keywords from the current page/post
+* Can now disable uContext in-text links on specific pages/posts from the edit page/post area.
+* Can now view keywords and links found for a specific page/post from the edit page/post area.
+
+= 2.0 =
+* Added caching for faster page/post response times

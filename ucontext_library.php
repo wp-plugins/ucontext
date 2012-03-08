@@ -19,9 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-class uContext
+class Ucontext_Library
 {
-	var $version = '2.0';
+	var $version = '2.1';
+
+	var $payload_url = 'http://www.ucontext.com/payload.php';
+	//var $payload_url = 'http://gozer.dynalias.com/ucontext/www/payload.php';
 
 	var $content = '';
 
@@ -50,20 +53,11 @@ class uContext
 	var $data = array();
 
 
-	function getSnippet()
-	{
-		$this->post['format'] = 'XHTML';
-
-		$link_list = uContext::postToServer($this->post);
-
-		return $link_list;
-	}
-
 	function getInText()
 	{
 		$this->post['format'] = 'INLINE';
 
-		$link_list = uContext::postToServer($this->post);
+		$link_list = Ucontext_Library::postToServer($this->post);
 
 		if (is_array($link_list))
 		{
@@ -86,11 +80,6 @@ class uContext
 	function setApiKey($api_key)
 	{
 		$this->post['api_key'] = $api_key;
-	}
-
-	function setSnippetId($snippet_id)
-	{
-		$this->post['snippet_id'] = intval($snippet_id);
 	}
 
 	function setKeywords($keywords)
@@ -118,26 +107,6 @@ class uContext
 		$this->post['url'] = trim($url);
 	}
 
-	function setCityStateCountry($city_state_country)
-	{
-		$this->post['city_state_country'] = trim($city_state_country);
-	}
-
-	function setZip($zip)
-	{
-		$this->post['zip'] = trim($zip);
-	}
-
-	function setRadius($radius)
-	{
-		$this->post['radius'] = intval($radius);
-	}
-
-	function setUom($uom)
-	{
-		$this->post['uom'] = trim($uom);
-	}
-
 	function setInTextClass($class)
 	{
 		$this->settings['intext_class'] = trim($class);
@@ -160,6 +129,8 @@ class uContext
 
 	function postToServer($post)
 	{
+		$data = NULL;
+
 		if (is_array($this->settings['cache']) && is_array($this->settings['cache']['link_list']))
 		{
 			$link_list = $this->settings['cache']['link_list'];
@@ -205,33 +176,10 @@ class uContext
 				$data = unserialize($this->socketPost($post));
 			}
 
-			if (isset($data['link_list']))
-			{
-				$this->data = $data;
-
-				$link_list = $data['link_list'];
-			}
-			else
-			{
-				$link_list = $data;
-			}
-
-			if (is_array($link_list))
-			{
-				foreach ($link_list as $key => $value)
-				{
-					if (!trim($key))
-					{
-						unset($link_list[$key]);
-					}
-				}
-			}
-
-			if (isset($data['link_list']))
-			{
-				$this->data['link_list'] = $link_list;
-			}
+			$link_list = $data['link_list'];
 		}
+
+		$this->data = $data;
 
 		return $link_list;
 	}
@@ -240,7 +188,7 @@ class uContext
 	{
 		$curl = curl_init();
 
-		curl_setopt($curl, CURLOPT_URL, 'http://www.ucontext.com/payload.php');
+		curl_setopt($curl, CURLOPT_URL, $this->payload_url);
 		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -255,7 +203,7 @@ class uContext
 
 	function socketPost($post)
 	{
-		$url_info = parse_url('http://www.ucontext.com/payload.php');
+		$url_info = parse_url($this->payload_url);
 
 		if (is_array($post))
 		{
