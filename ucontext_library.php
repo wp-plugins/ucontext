@@ -341,7 +341,7 @@ class Ucontext_Library
 
 	function unmaskLinks()
 	{
-		if (is_array($this->mask_html_list))
+		if (is_array($this->mask_links_list))
 		{
 			foreach ($this->mask_links_list as $hash => $match)
 			{
@@ -431,7 +431,7 @@ class Ucontext_Library
 						}
 					}
 
-					$this->content = preg_replace_callback('/(^|[^a-z])(' . preg_quote($keyword) . ')([^a-z]|$)/is', array($this, 'makeLink'), $this->content);
+					$this->content = preg_replace_callback('/(^|[^a-z])(' . preg_quote($keyword) . ')([^a-z\|]|$)/is', array($this, 'makeLink'), $this->content);
 				}
 			}
 		}

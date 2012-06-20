@@ -5,7 +5,7 @@ Description: Turns keywords in your content into contexutally related in-text Cl
 Author: uContext.com
 Author URI: http://www.uContext.com
 Tags: clickbank, affiliate, contextual, links, ads, advertising, context, intext, hopads
-Version: 2.1
+Version: 2.2
 
 Automatically finds keyword phrases and converts them into contextual in-text Clickbank affiliate links and auto-generates your Clickbank HopAd keywords.
 
@@ -52,6 +52,9 @@ Installation is simple. Get your FREE API Key from http://www.ucontext.com in ju
 !!! Remember: You must set the API Key in the Settings !!!
 
 == Changelog ==
+
+= 2.2 =
+* Fixed bug where new characters show in content when two keywords appear next to each other
 
 = 2.1 =
 * Plug-in will now display messages returned from the uContext service indicating issues with your API Key, member account, website configuratin, and post/page content

@@ -6,7 +6,7 @@
  Author: Summit Media Concepts LLC
  Author URI: http://www.SummitMediaConcepts.com
  Tags: clickbank, affiliate, links, ads, advertising, post, context, contextual
- Version: 2.1
+ Version: 2.2
  */
 
 /**
