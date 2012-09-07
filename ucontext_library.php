@@ -431,7 +431,7 @@ class Ucontext_Library
 						}
 					}
 
-					$this->content = preg_replace_callback('/(^|[^a-z])(' . preg_quote($keyword) . ')([^a-z\|]|$)/is', array($this, 'makeLink'), $this->content);
+					$this->content = preg_replace_callback('/(^|[^a-z])(' . preg_quote($keyword) . ')([^a-z]|$)/is', array($this, 'makeLink'), $this->content);
 				}
 			}
 		}
@@ -461,13 +461,13 @@ class Ucontext_Library
 				$attribs .= ' target="_blank"';
 			}
 
-			$link = $matches[1].'<a href="' . $this->keyword_data['url'] . '"'.$attribs.'>' . $matches[2] . '</a>'.$matches[3];
+			$link = '<a href="' . $this->keyword_data['url'] . '"'.$attribs.'>' . $matches[2] . '</a>';
 
 			$hash = '|'.md5(rand() . $link . serialize($matches)).'|';
 
 			$this->mask_links_list[$hash] = $link;
 
-			return $hash;
+			return $matches[1].$hash.$matches[3];
 		}
 		else
 		{

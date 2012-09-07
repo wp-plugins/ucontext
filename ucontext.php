@@ -6,7 +6,7 @@
  Author: Summit Media Concepts LLC
  Author URI: http://www.SummitMediaConcepts.com
  Tags: clickbank, affiliate, links, ads, advertising, post, context, contextual
- Version: 2.2
+ Version: 2.3
  */
 
 /**
@@ -33,8 +33,6 @@ define('UCONTEXT_VERSION', '2.1');
 require dirname(__FILE__).'/ucontext_library.php';
 
 add_action('admin_init', 'uContext_admin_init');
-
-add_action('widgets_init', create_function('', 'return register_widget("uContext_Widget");'));
 
 add_action('admin_menu', 'uContext_addAdminPages');
 add_action('admin_menu', 'uContext_add_post_meta');
@@ -175,25 +173,6 @@ function uContext_Settings()
 		<?php if (intval(get_option('ucontext_new_window'))){ echo ' checked'; } ?> /><br />
 		Includes target="_blank" attribute on links (anchor tags) created by
 		this plug-in.</td>
-	</tr>
-
-	<tr valign="top">
-		<td>&nbsp;</td>
-	</tr>
-	<tr valign="top">
-		<td scope="row" colspan="2"
-			style="color: #FFF; background-color: #999; font-size: 12px; font-weight: bold; padding: 2px 10px;">Clicbank
-		HopAds</td>
-	</tr>
-
-	<tr valign="top">
-		<td colspan="2">Clickbank HopAds are available as a widget called "<strong>uContext
-		- CB HopAds</strong>". You must get the HopAd code from your account
-		area on the <a href="http://www.clickbank.com/" target="_blank">Clickbank
-		website</a>.<br />
-		If you are not familiar with HopAds, please read more <a
-			href="http://www.clickbank.com/help/affiliate-help/affiliate-tools/hopad-builder/"
-			target="_blank" style="font-weight: bold;">here</a>.</td>
 	</tr>
 
 </table>
@@ -459,58 +438,4 @@ function uContext_admin_init()
 function uContext_admin_notices()
 {
 	echo '<div id="afftool_warning" class="updated fade"><p><strong>uContext:</strong> '.get_option('ucontext_sys_error').'</p></div>';
-}
-
-class uContext_Widget extends WP_Widget
-{
-
-	function uContext_Widget()
-	{
-		$widget_ops = array(
-		'classname' => 'uContext - CB HopAds',
-		'description' => 'Let uContext auto-fill your Clickbank HopAd keywords'
-		);
-
-		parent::WP_Widget(false, $name = 'uContext - CB HopAds', $widget_ops);
-	}
-
-	function widget($args, $instance)
-	{
-		extract($args);
-		extract($instance);
-
-		global $wpdb, $post;
-
-		$data = $wpdb->get_var('SELECT data FROM '.$wpdb->base_prefix.'ucontext_cache WHERE post_id = '.intval($post->ID));
-
-		if ($data)
-		{
-			$data = unserialize($data);
-
-			$keywords = array_keys($data['link_list']);
-
-			$instance['ucontext_hopad_code'] = preg_replace('/hopfeed_keywords\=\'.*?\';/is', 'hopfeed_keywords=\''.implode(',', $keywords).'\';', $instance['ucontext_hopad_code']);
-			$instance['ucontext_hopad_code'] = preg_replace('/hopfeed_tab1_keywords\=\'.*?\';/is', 'hopfeed_tab1_keywords=\''.implode(',', $keywords).'\';', $instance['ucontext_hopad_code']);
-
-			echo $instance['ucontext_hopad_code'];
-		}
-	}
-
-	function update($new_instance, $old_instance)
-	{
-		$new_instance['ucontext_hopad_code'] = trim($new_instance['ucontext_hopad_code']);
-
-		return $new_instance;
-	}
-
-	function form($instance)
-	{
-		echo '
-		<p>
-			<label for="' . $this->get_field_id('ucontext_hopad_code') . '">HopAd Code:</label>
-			<textarea id="' . $this->get_field_id('ucontext_hopad_code') . '" name="' . $this->get_field_name('ucontext_hopad_code') . '" style="width: 100%;">' . $instance['ucontext_hopad_code'] . '</textarea>
-			<a href="http://www.clickbank.com/help/affiliate-help/affiliate-tools/hopad-builder/" target="_blank" style="font-weight: bold;">Click here learn more about Clickbank HopAds</a>
-		</p>
-		';
-	}
 }
