@@ -1,0 +1,1 @@
+<p>Reports are available in the <a href="http://ucontext.com" target="_blank">paid version of this plug-in</a></p>

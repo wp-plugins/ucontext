@@ -1,63 +1,18 @@
-=== Plugin Name ===
-Plugin Name: uContext - Clickbank In-Text Links
-Plugin URI: http://www.uContext.com
-Description: Turns keywords in your content into contexutally related in-text Clickbank affiliate links
-Author: uContext.com
-Author URI: http://www.uContext.com
-Tags: clickbank, affiliate, contextual, links, ads, advertising, context, intext
-Version: 2.3
-
-Automatically finds keyword phrases and converts them into contextual in-text Clickbank affiliate links.
-
-== Description ==
-
-uContext is a free service that locates keywords in your content and turns them into affiliate 
-links that take your visitors to contextually related Clickbank offers with your affiliate ID.
-
-Why make a couple cents per click when you could potentially make $15, $20, or more per sale 
-with one of the most popular affiliate systems in the world.
-
-You're in control. Unlike other in-text contextual advertising services, you decide how many 
-links are created and what those links look like. Add your own Clickbank tracking ID and refine 
-the criteria uContext uses to match offers.
-
-uContext is a perfect solution for ad blindness. In-text links get clicked because they're right 
-where your visitors are looking when they read your page content.
-
-This is a great plug-in if you have a blog with lots of posts, or you have lots of blogs and need 
-something quick, easy, and effective to monetize them.
-
-Installation is simple. Get your FREE API Key from http://www.ucontext.com in just a few minutes.
-
+=== Plugin Name ===Plugin Name: uContext - Clickbank In-Text affiliate linksPlugin URI: http://www.uContext.comDescription: Automatically converts keywords into contextual in-text Clickbank affiliate linksAuthor: uContext.comAuthor URI: http://www.uContext.comTags: Clickbank, affiliate, contextual, links, ads, advertising, context, intext, hopadsVersion: 3.1
+Automatically converts keywords into contextual in-text Clickbank affiliate links
+== Description ==The uContext plug-in automatically locates keywords in your content and turns them into YOUR Clickbank contextually related affiliate links. This is a great plug-in if you have a blog with lots of posts, or you have lots of blogs and need something quick, easy, and effective to monetize them.Why make a couple cents per click when you could potentially make $5, $15, $20, or more per sale?= Solution for Ad Blindness =uContext is a perfect solution for ad blindness. When most people have learned to ignore your banners and Adsense links, your in-text affiliate links get clicked because they're right where your visitors are looking...  IN YOUR CONTENT.
+= You're in Control =Unlike other in-text contextual advertising services, you're in control of everything...* How many links appear in your content* Style your affiliate links using CSS or leave them defaulted to your site's style* Turn off auto-keyword discovery and only have links for the keywords you decide* Browse for better product matches to your keywords* Choose the category and other filters for the type of products to create affiliate links to
+= Upgrade to the Premium Version =
+Our premium version adds...* Click reports showing when and what keywords got the most clicks* Bulk keyword editor for easier, faster management of all your keywords* Set site-wide keywords to be use first when uContext tries to create links* Set page/post specific keywords to be use first when uContext tries to create links on the page/post* Link designer so you don't have to mess with your stylesheets to customize they way your affilaite links look* Affiliate link widget shows the affiliate linked product titles relatived to the page/post being displayed.  This is a nice Adsense alternative.* Customize the redirection link for affiliate links (for link cloaking)[http://www.ucontext.com](http://www.ucontext.com)
 == Installation ==
 
-1. Sign-up at http://www.ucontext.com
+1. Unzip this plug-in into your wp-content/plugins directory
+1. Log-in to your WordPress admin area
+1. Go to "Plugins" in the left admin menu
+1. Look for "uContext for Clickbank" in the plugin list
+1. Click "Activate"
+1. Click "uC for Clickbank" in the left admin menu
+1. Click on the "Settings" tab
+1. Complete the "Clickbank Settings" section
 
-2. Click the link in your activation email
-
-3. Get your API Key from the welcome email you'll receive shortly after activation
-
-4. Unzip this plug-in into your wp-content/plugins directory
-
-5. Log-in to your WordPress admin area to activate the plug-in
-
-6. Configure the "uContext" plug-in under the "Settings" menu
-				
-!!! Remember: You must set the API Key in the Settings !!!
-
-== Changelog ==
-
-= 2.3 =
-* Removed support for Clickbank HopAds due to Clickbank removing their HopAd service
-
-= 2.2 =
-* Fixed bug where new characters show in content when two keywords appear next to each other
-
-= 2.1 =
-* Plug-in will now display messages returned from the uContext service indicating issues with your API Key, member account, website configuratin, and post/page content
-* Will replace first tab in tabbed HopAds with keywords from the current page/post
-* Can now disable uContext in-text links on specific pages/posts from the edit page/post area.
-* Can now view keywords and links found for a specific page/post from the edit page/post area.
-
-= 2.0 =
-* Added caching for faster page/post response times
+!!! Remember: You must set the "uContext API Key" in the Settings !!!
