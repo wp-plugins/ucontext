@@ -50,9 +50,9 @@ Our premium version adds...
 
 = Check out my plugins =
 
-* [http://wordpress.org/plugins/ucontext/](uContext for Clickbank - Clickbank in-text affiliate links)
-* [http://wordpress.org/plugins/ucontext-for-amazon/](uContext for Amazon - Amazon in-text affiliate links)
-* [http://wordpress.org/plugins/xbrander-pdf-document-brander/](xBrander - branded PDF's for your affiliates)
+* [uContext for Clickbank - Clickbank in-text affiliate links](http://wordpress.org/plugins/ucontext/)
+* [uContext for Amazon - Amazon in-text affiliate links](http://wordpress.org/plugins/ucontext-for-amazon/)
+* [xBrander - branded PDF's for your affiliates](http://wordpress.org/plugins/xbrander-pdf-document-brander/)
 
 == Installation ==
 
