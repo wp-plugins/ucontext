@@ -30,8 +30,6 @@ class Ucontext_Admin extends Ucontext_Base
 	{
 		global $wpdb;
 
-		self::getLatestPluginVersion();
-
 		if (isset($_POST['form_vars']))
 		{
 			$_POST['form_vars'] = self::array_stripslashes($_POST['form_vars']);
@@ -147,25 +145,5 @@ class Ucontext_Admin extends Ucontext_Base
 			PRIMARY KEY (`spider_agent_id`),
 			KEY `sig` (`sig`)
 		) CHARSET=utf8;');
-	}
-
-	public static function array_stripslashes($array)
-	{
-		if (is_array($array))
-		{
-			foreach ($array as $field => $value)
-			{
-				if (is_array($value))
-				{
-					$array[$field] = self::array_stripslashes($value);
-				}
-				else
-				{
-					$array[$field] = stripslashes($value);
-				}
-			}
-		}
-
-		return $array;
 	}
 }

@@ -15,9 +15,9 @@ function ucontext_fadeSaved(id)
 	<div style="clear: both;"></div>
 <?php
 
-if (version_compare(UCONTEXT_VERSION, get_option('ucontext_latest_version', UCONTEXT_VERSION), '<'))
+if (version_compare(UCONTEXT_VERSION, get_option('rlm_version_'.self::$name, UCONTEXT_VERSION), '<'))
 {
-	echo '<div style="color: #900;">A new version is available <a href="http://ucontext.com/members/" target="_blank">here</a></div>';
+	echo '<div style="color: #900;"><a href="http://ucontext.com/wp-login.php" target="_blank">Click here to download the latest version</a></div>';
 }
 
 ?>

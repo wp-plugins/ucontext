@@ -2,10 +2,14 @@
 
 // Copyright 2013 - Summit Media Concepts LLC - http://SummitMediaConcepts.com
 
-class Ucontext_Integration
-{
+require_once UCONTEXT_APP_PATH.'/Ucontext_Integration_Base.php';
 
-	public static function search($keyword)
+class Ucontext_Integration extends Ucontext_Integration_Base
+{
+	public static $crypt_key	= 'jai95vcdv3b8gc6igi31494p6x280c7m';
+
+
+	public static function search($keyword, $force = FALSE)
 	{
 		$result = array();
 
@@ -19,7 +23,8 @@ class Ucontext_Integration
 			}
 
 			$request = array(
-			'api_key'					=> @get_option('ucontext_api_key'),
+			'handle'					=> Ucontext_Base::$name,
+			'license_key'				=> @get_option('rlm_license_key_'.Ucontext_Base::$name),
 			'http_host'					=> site_url(),
 			'keyword'					=> $keyword['custom_search'],
 			'clickbank_nickname'		=> @get_option('ucontext_clickbank_nickname'),
@@ -42,15 +47,16 @@ class Ucontext_Integration
 
 			$result = Ucontext_Base::getCache('clickbank_search', $key);
 
-			if ($result === FALSE)
+			if ($result === FALSE || $force)
 			{
-				$response = wp_remote_post('http://ucontext.com/api.php?method=searchClickbankCatalog&version='.UCONTEXT_VERSION, array('method' => 'POST', 'body' => $request));
+				sleep(1);
+				$response = wp_remote_post('http://ucontext.com/api_rlm.php?method=searchClickbankCatalog&version='.UCONTEXT_VERSION, array('method' => 'POST', 'body' => $request));
 
 				$result = json_decode(@$response['body'], true);
 
 				if (@$result['error_code'] >= 400)
 				{
-					update_option('ucontext_notification', 'uContext for '.UCONTEXT_INTEGRATION_TITLE.': '.@$result['error_message']);
+					update_option('ucontext_notification', 'uContext for '.UCONTEXT_INTEGRATION_TITLE.': '.@$result['error_message'].' ('.@$result['error_code'].')');
 					update_option('ucontext_api_disabled', 1);
 				}
 

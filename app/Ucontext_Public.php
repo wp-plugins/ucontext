@@ -13,17 +13,22 @@ class Ucontext_Public extends Ucontext_Base
 
 	public static function filterContent($content)
 	{
-		global $wpdb, $post;
+		require_once UCONTEXT_INTEGRATION_PATH.'/Ucontext_Integration.php';
 
-		$display = (int)get_option('ucontext_links_display', 0);
-
-		if (!$display || ($display == 1 && $post->post_type == 'post') || ($display == 2 && $post->post_type == 'page'))
+		if (Ucontext_Integration::isValidLicense())
 		{
-			if (!(int)get_post_meta($post->ID, 'ucontext_disable', true))
-			{
-				$keyword_list = self::getPostKeywordList($post);
+			global $wpdb, $post;
 
-				$content = Ucontext_Intext::addInTextLinks($content, $keyword_list, @get_option('ucontext_max_links', 5));
+			$display = (int)get_option('ucontext_links_display', 0);
+
+			if (!$display || ($display == 1 && $post->post_type == 'post') || ($display == 2 && $post->post_type == 'page'))
+			{
+				if (!(int)get_post_meta($post->ID, 'ucontext_disable', true))
+				{
+					$keyword_list = self::getPostKeywordList($post);
+
+					$content = Ucontext_Intext::addInTextLinks($content, $keyword_list, @get_option('ucontext_max_links', 5));
+				}
 			}
 		}
 
@@ -161,7 +166,14 @@ class Ucontext_Public extends Ucontext_Base
 			}
 			else
 			{
-				$keyword_list[$keyword]['url'] = trim(home_url(), '/').'/'.get_option('ucontext_redirect_slug', 'recommends').'/'.$post->ID.'/'.urlencode($keyword);
+				if (trim(get_option('permalink_structure', '')))
+				{
+					$keyword_list[$keyword]['url'] = trim(site_url(), '/').'/'.@get_option('ucontext_redirect_slug', 'recommends').'/'.$post->ID.'/'.urlencode($keyword);
+				}
+				else
+				{
+					$keyword_list[$keyword]['url'] = trim(site_url(), '/').'?'.@get_option('ucontext_redirect_slug', 'recommends').'='.urlencode($keyword).'&post_id='.$post->ID;
+				}
 			}
 		}
 

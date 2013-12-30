@@ -3,12 +3,12 @@
  Plugin Name: uContext for Clickbank
  Plugin URI: http://www.uContext.com/
  Description: In-text Clickbank affiliate links
- Version: 3.1
+ Version: 3.3
  Author: Summit Media Concepts LLC
  Author URI: http://www.SummitMediaConcepts.com/
  */
 
-define('UCONTEXT_VERSION',		'3.1');
+define('UCONTEXT_VERSION',		'3.3');
 
 define('UCONTEXT_PATH',			dirname(__FILE__));
 define('UCONTEXT_APP_PATH',		UCONTEXT_PATH.'/app');
@@ -76,6 +76,12 @@ if (is_admin())
 	add_action('activate_ucontext/ucontext.php', 'Ucontext_activatePlugin');
 
 	@include(dirname(__FILE__).'/postmeta.php');
+
+	// Carry meta from old plugin version to current
+	if (!get_option('rlm_license_key_'.Ucontext_Base::$name) && get_option('ucontext_api_key'))
+	{
+		update_option('rlm_license_key_'.Ucontext_Base::$name, get_option('ucontext_api_key'));
+	}
 }
 else
 {
@@ -113,11 +119,21 @@ else
 
 	function Ucontext_checkRedirect()
 	{
-		$parts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+		$slug = get_option('ucontext_redirect_slug', 'recommends');
 
-		$slug		= @$parts[0];
-		$post_id	= @$parts[1];
-		$keyword	= urldecode(@$parts[2]);
+		if (isset($_REQUEST[$slug]) && $_REQUEST[$slug])
+		{
+			$post_id = @$_REQUEST['post_id'];
+			$keyword = @$_REQUEST[$slug];
+		}
+		else
+		{
+			$parts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+
+			$slug		= @$parts[0];
+			$post_id	= @$parts[1];
+			$keyword	= urldecode(@$parts[2]);
+		}
 
 		if ($slug == get_option('ucontext_redirect_slug', 'recommends') && (int)$post_id && $keyword)
 		{

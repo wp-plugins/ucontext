@@ -89,23 +89,24 @@ class Ucontext_Base
 		}
 	}
 
-	public static function getLatestPluginVersion()
+	public static function array_stripslashes($array)
 	{
-		$last_check = (int)get_option('ucontext_last_version_check', 0);
-
-		if ($last_check < (current_time('timestamp') - 86400))
+		if (is_array($array))
 		{
-			$response = wp_remote_post('http://www.ucontext.com/api.php?method=getPluginVersion&integration='.urlencode(UCONTEXT_INTEGRATION_HANDLE));
-
-			if (!is_wp_error($response))
+			foreach ($array as $field => $value)
 			{
-				$version = preg_replace('/[^0-9\.]+/is', '', $response['body']);
-
-				update_option('ucontext_latest_version', $version);
+				if (is_array($value))
+				{
+					$array[$field] = self::array_stripslashes($value);
+				}
+				else
+				{
+					$array[$field] = stripslashes($value);
+				}
 			}
 		}
 
-		update_option('ucontext_last_version_check', current_time('timestamp'));
+		return $array;
 	}
 
 	public static function setCache($namespace, $key, $data, $expire_seconds = 86400)
@@ -121,7 +122,7 @@ class Ucontext_Base
 
 		$expire_datetime = current_time('timestamp') + (int)$expire_seconds;
 
-		$wpdb->query('REPLACE INTO '.self::$table['cache'].' (`namespace`, `key`, `data`, `expire_datetime`) VALUES ("'.addslashes($namespace).'", "'.addslashes($key).'", "'.addslashes($data).'", FROM_UNIXTIME(UNIX_TIMESTAMP() + '.(int)$expire_seconds.'))');
+		$wpdb->query('REPLACE INTO '.self::$table['cache'].' (`namespace`, `key`, `data`, `expire_datetime`) VALUES ("'.addslashes((string)$namespace).'", "'.addslashes((string)$key).'", "'.addslashes((string)$data).'", FROM_UNIXTIME(UNIX_TIMESTAMP() + '.(int)$expire_seconds.'))');
 	}
 
 	public static function getCache($namespace, $key)
