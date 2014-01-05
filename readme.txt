@@ -5,7 +5,7 @@ Description: Automatically converts keywords into contextual in-text Clickbank a
 Author: uContext.com
 Author URI: http://www.uContext.com
 Tags: Clickbank, affiliate, contextual, links, ads, advertising, context, intext, hopads
-Version: 3.3
+Version: 3.4
 
 Automatically converts keywords into contextual in-text Clickbank affiliate links
 
