@@ -11,7 +11,7 @@ function ucontext_fadeSaved(id)
 <div id="ucontext_admin">
 
 	<img src="<?php echo UCONTEXT_PLUGIN_URL ?>/app/integration/<?php echo strtolower(UCONTEXT_INTEGRATION_HANDLE); ?>/images/logo.png" width="200" height="55" border="0" alt="uContext for <?php echo UCONTEXT_INTEGRATION_TITLE; ?>" style="float: left;" /> <div style="float: left; width: 100px;"><strong>v<?php echo UCONTEXT_VERSION ?></strong></div>
-	<div id="ucontext_ads"><?php echo @wp_remote_retrieve_body(@wp_remote_get('http://ucontext.com/plugin_ads/ucontext_ads.php')); ?></div>
+	<div id="ucontext_ads"><?php echo @wp_remote_retrieve_body(@wp_remote_get('http://ucontext.com/plugin_ads/ucontext_ads.php?version='.UCONTEXT_VERSION.'&type=free')); ?></div>
 	<div style="clear: both;"></div>
 <?php
 

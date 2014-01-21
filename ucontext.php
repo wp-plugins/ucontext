@@ -3,12 +3,12 @@
  Plugin Name: uContext for Clickbank
  Plugin URI: http://www.uContext.com/
  Description: In-text Clickbank affiliate links
- Version: 3.4
+ Version: 3.5
  Author: Summit Media Concepts LLC
  Author URI: http://www.SummitMediaConcepts.com/
  */
 
-define('UCONTEXT_VERSION',		'3.4');
+define('UCONTEXT_VERSION',		'3.5');
 
 define('UCONTEXT_PATH',			dirname(__FILE__));
 define('UCONTEXT_APP_PATH',		UCONTEXT_PATH.'/app');
@@ -119,17 +119,17 @@ else
 
 	function Ucontext_checkRedirect()
 	{
-		$slug = trim(@get_option('ucontext_redirect_slug', 'recommends'));
+		$ucontext_redirect_slug = trim(@get_option('ucontext_redirect_slug', 'recommends'));
 
-		if (!$slug)
+		if (!$ucontext_redirect_slug)
 		{
-			$slug = 'recommends';
+			$ucontext_redirect_slug = 'recommends';
 		}
 
-		if (isset($_REQUEST[$slug]) && $_REQUEST[$slug])
+		if (isset($_REQUEST[$ucontext_redirect_slug]) && $_REQUEST[$ucontext_redirect_slug])
 		{
 			$post_id = @$_REQUEST['post_id'];
-			$keyword = @$_REQUEST[$slug];
+			$keyword = @$_REQUEST[$ucontext_redirect_slug];
 		}
 		else
 		{
@@ -140,7 +140,7 @@ else
 			$keyword	= urldecode(@$parts[2]);
 		}
 
-		if ($slug == get_option('ucontext_redirect_slug', 'recommends') && (int)$post_id && $keyword)
+		if ($slug == $ucontext_redirect_slug && (int)$post_id && $keyword)
 		{
 			global $wpdb;
 
@@ -189,7 +189,7 @@ else
 		}
 	}
 
-	add_action('plugins_loaded', 'Ucontext_checkRedirect');
+	add_action('plugins_loaded', 'Ucontext_checkRedirect', 0);
 
 	add_filter('the_content', 'Ucontext_filterContent', 9999);
 	add_filter('the_content_feed', 'Ucontext_filterContent', 9999);
