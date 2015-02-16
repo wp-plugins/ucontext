@@ -5,7 +5,7 @@
 class Ucontext_Form
 {
 
-	function textField($label, $name, $value, $size = 50, $caption = '', $required = FALSE)
+	public static function textField($label, $name, $value, $size = 50, $caption = '', $required = FALSE)
 	{
 		if (!intval($size)){ $size = 50; }
 		echo '<tr><th>'.$label.':</th><td>';
@@ -21,7 +21,7 @@ class Ucontext_Form
 		echo '</td></tr>';
 	}
 
-	function checkboxField($label, $name, $value, $caption = '', $required = FALSE)
+	public static function checkboxField($label, $name, $value, $caption = '', $required = FALSE)
 	{
 		echo '<tr><th>'.$label.':</th><td>';
 		$checked = '';
@@ -41,7 +41,7 @@ class Ucontext_Form
 		echo '</td></tr>';
 	}
 
-	function textareaField($label, $name, $value, $rows = 3, $cols = 40, $caption = '', $max_length = NULL, $required = FALSE)
+	public static function textareaField($label, $name, $value, $rows = 3, $cols = 40, $caption = '', $max_length = NULL, $required = FALSE)
 	{
 		if (!intval($rows)){ $row = 3; }
 		if (!intval($cols)){ $cols = 40; }
@@ -61,7 +61,7 @@ class Ucontext_Form
 		echo '</td></tr>';
 	}
 
-	function selectField($label, $name, $value, $list, $caption = '', $required = FALSE)
+	public static function selectField($label, $name, $value, $list, $caption = '', $required = FALSE)
 	{
 		echo '<tr><th>'.$label.':</th><td>';
 		echo '<select name="'.$name.'" onchange="ucontext_form_changed = true;">';
@@ -90,12 +90,12 @@ class Ucontext_Form
 		echo '</td></tr>';
 	}
 
-	function startTable()
+	public static function startTable()
 	{
 		echo '<table class="ucontext_form_table" cellpadding="0" cellspacing="5">';
 	}
 
-	function fadeSave()
+	public static function fadeSave()
 	{
 		echo '<div id="ucontext_saved" style="display: none; padding: 10px;">Saved</div>';
 		if (isset($_GET['saved']) && $_GET['saved'])
@@ -104,7 +104,7 @@ class Ucontext_Form
 		}
 	}
 
-	function listErrors($error_list)
+	public static function listErrors($error_list)
 	{
 		if (is_array($error_list) && count($error_list))
 		{
@@ -119,17 +119,17 @@ class Ucontext_Form
 		}
 	}
 
-	function labelField($label, $value)
+	public static function labelField($label, $value)
 	{
 		echo '<tr><th>'.$label.':</th><td style="vertical-align: middle;">'.$value.'</td></tr>';
 	}
 
-	function blankRow()
+	public static function blankRow()
 	{
 		echo '<tr><th>&nbsp;</th><td>&nbsp;</td></tr>';
 	}
 
-	function clearRow($text = '')
+	public static function clearRow($text = '')
 	{
 		if (!$text)
 		{
@@ -138,12 +138,12 @@ class Ucontext_Form
 		echo '<tr><td colspan="2">'.$text.'</td></tr>';
 	}
 
-	function section($title)
+	public static function section($title)
 	{
 		echo '<tr><td colspan="2" class="section"><h3>'.$title.'</h3></td></tr>';
 	}
 
-	function endTable()
+	public static function endTable()
 	{
 		echo '</table>';
 	}

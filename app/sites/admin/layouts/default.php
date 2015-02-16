@@ -26,11 +26,11 @@ if (version_compare(UCONTEXT_VERSION, get_option('rlm_version_'.self::$name, UCO
 	<tr>
 		<td>
 			<ul id="ucontext_nav_tabs">
-				<li<?php if (self::$action == 'keywords'){ echo ' class="selected"'; } ?>><a href="admin.php?page=<?= self::$name ?>&action=keywords"><img src="<?php echo UCONTEXT_PLUGIN_URL ?>/includes/icons/application_side_list.png" width="16" height="16" border="0" />Keywords</a></li>
-				<li<?php if (self::$action == 'reports'){ echo ' class="selected"'; } ?>><a href="admin.php?page=<?= self::$name ?>&action=reports"><img src="<?php echo UCONTEXT_PLUGIN_URL ?>/includes/icons/chart_bar.png" width="16" height="16" border="0" />Reports</a></li>
-				<li<?php if (self::$action == 'designer'){ echo ' class="selected"'; } ?>><a href="admin.php?page=<?= self::$name ?>&action=designer"><img src="<?php echo UCONTEXT_PLUGIN_URL ?>/includes/icons/palette.png" width="16" height="16" border="0" />Link Designer</a></li>
-				<li<?php if (self::$action == 'settings'){ echo ' class="selected"'; } ?>><a href="admin.php?page=<?= self::$name ?>&action=settings"><img src="<?php echo UCONTEXT_PLUGIN_URL ?>/includes/icons/cog.png" width="16" height="16" border="0" />Settings</a></li>
-				<li<?php if (self::$action == 'help'){ echo ' class="selected"'; } ?>><a href="admin.php?page=<?= self::$name ?>&action=help');"><img src="<?php echo UCONTEXT_PLUGIN_URL ?>/includes/icons/help.png" width="16" height="16" border="0" />Help</a></li>
+				<li<?php if (self::$action == 'keywords'){ echo ' class="selected"'; } ?>><a href="admin.php?page=<?php echo self::$name ?>&action=keywords"><img src="<?php echo UCONTEXT_PLUGIN_URL ?>/includes/icons/application_side_list.png" width="16" height="16" border="0" />Keywords</a></li>
+				<li<?php if (self::$action == 'reports'){ echo ' class="selected"'; } ?>><a href="admin.php?page=<?php echo self::$name ?>&action=reports"><img src="<?php echo UCONTEXT_PLUGIN_URL ?>/includes/icons/chart_bar.png" width="16" height="16" border="0" />Reports</a></li>
+				<li<?php if (self::$action == 'designer'){ echo ' class="selected"'; } ?>><a href="admin.php?page=<?php echo self::$name ?>&action=designer"><img src="<?php echo UCONTEXT_PLUGIN_URL ?>/includes/icons/palette.png" width="16" height="16" border="0" />Link Designer</a></li>
+				<li<?php if (self::$action == 'settings'){ echo ' class="selected"'; } ?>><a href="admin.php?page=<?php echo self::$name ?>&action=settings"><img src="<?php echo UCONTEXT_PLUGIN_URL ?>/includes/icons/cog.png" width="16" height="16" border="0" />Settings</a></li>
+				<li<?php if (self::$action == 'help'){ echo ' class="selected"'; } ?>><a href="admin.php?page=<?php echo self::$name ?>&action=help');"><img src="<?php echo UCONTEXT_PLUGIN_URL ?>/includes/icons/help.png" width="16" height="16" border="0" />Help</a></li>
 			</ul>
 			<div id="ucontext_view_wrapper">
 				<div id="ucontext_view_box">
