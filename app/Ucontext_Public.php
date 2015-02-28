@@ -87,35 +87,38 @@ class Ucontext_Public extends Ucontext_Base
 			self::saveKeywordsToMainList(array_keys($keyword_list));
 		}
 
-		$ucontext_auto_keywords = unserialize(get_post_meta($post->ID, 'ucontext_auto_keywords', true));
-
-		if (!is_array($ucontext_auto_keywords) || !count($ucontext_auto_keywords))
+		if (!(int)@get_option('ucontext_no_autokeywords', 0))
 		{
-			$ucontext_auto_keywords = Ucontext_Keyword::findKeywordsInContent($post->post_title, $post->post_content, array_keys($keyword_list));
+			$ucontext_auto_keywords = unserialize(get_post_meta($post->ID, 'ucontext_auto_keywords', true));
 
-			update_post_meta($post->ID, 'ucontext_auto_keywords', serialize($ucontext_auto_keywords));
-
-			Ucontext_Base::saveKeywordsToMainList(array_keys($ucontext_auto_keywords), 'auto');
-		}
-
-		if (is_array($ucontext_auto_keywords))
-		{
-			foreach ($ucontext_auto_keywords as $keyword => $count)
+			if (!is_array($ucontext_auto_keywords) || !count($ucontext_auto_keywords))
 			{
-				$keyword = trim($keyword);
+				$ucontext_auto_keywords = Ucontext_Keyword::findKeywordsInContent($post->post_title, $post->post_content, array_keys($keyword_list));
 
-				if ($keyword)
+				update_post_meta($post->ID, 'ucontext_auto_keywords', serialize($ucontext_auto_keywords));
+
+				Ucontext_Base::saveKeywordsToMainList(array_keys($ucontext_auto_keywords), 'auto');
+			}
+
+			if (is_array($ucontext_auto_keywords))
+			{
+				foreach ($ucontext_auto_keywords as $keyword => $count)
 				{
-					$keyword_list[$keyword] = array();
+					$keyword = trim($keyword);
+
+					if ($keyword)
+					{
+						$keyword_list[$keyword] = array();
+					}
 				}
 			}
-		}
 
-		if (!(int)@get_post_meta($post->ID, 'ucontext_processed', TRUE))
-		{
-			self::saveKeywordsToMainList(array_keys($keyword_list), 'auto');
+			if (!(int)@get_post_meta($post->ID, 'ucontext_processed', TRUE))
+			{
+				self::saveKeywordsToMainList(array_keys($keyword_list), 'auto');
 
-			update_post_meta($post->ID, 'ucontext_processed', 1);
+				update_post_meta($post->ID, 'ucontext_processed', 1);
+			}
 		}
 
 		if (is_array($keyword_list))

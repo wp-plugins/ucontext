@@ -66,63 +66,61 @@ jQuery(document).ready(function(){
 			type: 'POST',
 			url: '<?php echo admin_url( 'admin-ajax.php' ) ?>?action=ucontext_action&do=keyword_save&keyword_id=<?php echo (int)@$form_vars['keyword_id'] ?>',
 			data: jQuery('#ucontext_keyword_edit_form').serialize(),
-			dataType: 'json',
-			success: function( response ) {
-				if (response.success == false)
+			dataType: 'json'
+		}).done(function( response ) {
+			if (response.success == true || response.success == 'true')
+			{
+				if (response.keyword_id != null && response.keyword_id > 0)
 				{
-					if (response.error != null && response.error != '')
+					uC_editKeyword(response.keyword_id, 1);
+
+					if (response.new_keyword == true || response.refresh_list == true)
 					{
-						alert(response.error);
-					}
-					else
-					{
-						alert('There was an error. Please check your information.');
+						uC_loadKeywordList('');
 					}
 				}
 				else
 				{
-					if (response.keyword_id != null && response.keyword_id > 0)
-					{
-						uC_editKeyword(response.keyword_id, 1);
-
-						if (response.new_keyword == true || response.refresh_list == true)
-						{
-							uC_loadKeywordList('');
-						}
-					}
-					else
-					{
-						alert('There was an error. Please check your information.');
-					}
+					alert('There was an error. Please check your information.');
 				}
-      		}
-		});
+			}
+			else
+			{
+				if (response.error != null && response.error != '')
+				{
+					alert(response.error);
+				}
+				else
+				{
+					alert('There was an error. Please check your information.');
+				}
+			}
+  		});
 	});
 
 	jQuery('#ucontext_delete_button').click( function() {
 		jQuery.ajax({
 			type: 'POST',
 			url: '<?php echo admin_url( 'admin-ajax.php' ) ?>?action=ucontext_action&do=keyword_delete&keyword_id=<?php echo (int)@$form_vars['keyword_id'] ?>',
-			dataType: 'json',
-			success: function( response ) {
-				if (response.success == false)
+			dataType: 'json'
+		}).done(function(response) {
+			if (response.success == true || response.success == 'true')
+			{
+				jQuery('#ucontext_keyword_edit').html('');
+				uC_loadKeywordList('');
+			}
+			else
+			{
+				if (response.error != null && response.error != '')
 				{
-					if (response.error != null && response.error != '')
-					{
-						alert(response.error);
-					}
-					else
-					{
-						alert('There was an error. Please check your information.');
-					}
+					alert(response.error);
 				}
 				else
 				{
-					jQuery('#ucontext_keyword_edit').html('');
-					uC_loadKeywordList('');
+					alert('There was an error. Please check your information!');
 				}
-	  		}
-		});
+			}
+  		});
 	});
 });
 </script>
