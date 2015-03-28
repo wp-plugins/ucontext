@@ -2,10 +2,12 @@
 Plugin Name: uContext - Clickbank In-Text affiliate links
 Plugin URI: http://www.uContext.com
 Description: Automatically converts keywords into contextual in-text Clickbank affiliate links
-Author: uContext.com
+Author: Gary Cornelisse
 Author URI: http://www.uContext.com
 Tags: Clickbank, affiliate, contextual, links, ads, advertising, context, intext, hopads
 Version: 3.9.1
+Tested up to: 4.1.1
+Contributors: gcornelisse
 
 Automatically converts keywords into contextual in-text Clickbank affiliate links
 
