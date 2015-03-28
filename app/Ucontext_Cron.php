@@ -15,7 +15,7 @@ class Ucontext_Cron extends Ucontext_Base
 	{
 		global $wpdb;
 
-		$keyword_list = $wpdb->get_results('SELECT keyword_id FROM '.self::$table['keyword'].' WHERE last_updated < '.(current_time('timestamp') - 172800).' LIMIT 150', ARRAY_A);
+		$keyword_list = $wpdb->get_results('SELECT keyword_id FROM '.self::$table['keyword'].' WHERE last_updated < '.(current_time('timestamp') - 172800).' LIMIT 50', ARRAY_A);
 
 		if (is_array($keyword_list) && count($keyword_list))
 		{

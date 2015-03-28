@@ -3,12 +3,12 @@
  Plugin Name: uContext for Clickbank
  Plugin URI: http://www.uContext.com/
  Description: In-text Clickbank affiliate links
- Version: 3.9
+ Version: 3.9.1
  Author: Summit Media Concepts LLC
  Author URI: http://www.SummitMediaConcepts.com/
  */
 
-define('UCONTEXT_VERSION',		'3.9');
+define('UCONTEXT_VERSION',		'3.9.1');
 
 define('UCONTEXT_PATH',			dirname(__FILE__));
 define('UCONTEXT_APP_PATH',		UCONTEXT_PATH.'/app');
@@ -73,7 +73,7 @@ if (is_admin())
 
 	add_action('wp_enqueue_scripts', 'Ucontext_enqueueScripts');
 
-	register_activation_hook(__FILE__, 'Ucontext4a_activatePlugin');
+	register_activation_hook(__FILE__, 'Ucontext_activatePlugin');
 
 	@include(dirname(__FILE__).'/postmeta.php');
 

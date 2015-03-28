@@ -89,13 +89,13 @@ class Ucontext_Public extends Ucontext_Base
 
 		if (!(int)@get_option('ucontext_no_autokeywords', 0))
 		{
-			$ucontext_auto_keywords = unserialize(get_post_meta($post->ID, 'ucontext_auto_keywords', true));
+			$ucontext_auto_keywords = get_post_meta($post->ID, 'ucontext_auto_keywords', true);
 
 			if (!is_array($ucontext_auto_keywords) || !count($ucontext_auto_keywords))
 			{
 				$ucontext_auto_keywords = Ucontext_Keyword::findKeywordsInContent($post->post_title, $post->post_content, array_keys($keyword_list));
 
-				update_post_meta($post->ID, 'ucontext_auto_keywords', serialize($ucontext_auto_keywords));
+				update_post_meta($post->ID, 'ucontext_auto_keywords', $ucontext_auto_keywords);
 
 				Ucontext_Base::saveKeywordsToMainList(array_keys($ucontext_auto_keywords), 'auto');
 			}
